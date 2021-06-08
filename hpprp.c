@@ -173,21 +173,6 @@ void swap_buffers()
 	new_field=tmp;
 }
 
-void print_field(int e, int iter){
-	char field_path[100];
-	FILE *fl_field;
-	sprintf(field_path, "Field/field%d_%d.txt", e, iter);
-	fl_field=fopen(field_path, "w");
-	int i0= 0,j0= 0, i1= HEIGHT, j1= WIDTH;
-	for (int i=i0; i<i1; i++) {
-		for (int j=j0; j<j1; j++) {
-			int d = FIELD(i, j);
-			fprintf(fl_field, "%d\n", d);
-		}
-	}
-	fclose(fl_field);
-}
-
 int main()
 {
 	struct timespec t0, t1;
@@ -216,9 +201,6 @@ int main()
 
 			#pragma omp single
 			sources(iter);
-			#pragma omp single
-			print_field(ensemble, iter);
-
 
 			#pragma omp for private(i) schedule(static)
 			for(i=0; i<HEIGHT; i++) {
